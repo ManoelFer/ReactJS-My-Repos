@@ -76,3 +76,39 @@ export const SubmitButton = styled.button.attrs<IButton>(
         }
     `}
 `
+
+
+export const List = styled.ul`
+    list-style: none;
+    margin-top: 20px;
+
+    li{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-between;
+        padding: 15px 0;
+
+        & + li {
+            border-top: 1px solid #eee;
+        }
+
+        a{
+            color: #0D2636;
+            text-decoration: none;
+        }
+    }
+`
+
+export const RemoveButton = styled.button.attrs({
+    type: 'button',
+})`
+    
+    background-color: transparent;
+    color: #0D2636;
+    border: 0;
+
+    padding: 8px 7px;
+    outline: 0;
+    border-radius: 4px;
+`

@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  bottom {
+  button {
     cursor: pointer;
   }
 `;

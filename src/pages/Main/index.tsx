@@ -1,14 +1,18 @@
 import { useState, useCallback } from 'react'
 
-import { FaGithub, FaPlus, FaSpinner } from 'react-icons/fa'
+import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints'
 
-import { Container, Form, SubmitButton } from "./styles"
+import { Container, Form, List, RemoveButton, SubmitButton } from "./styles"
+
+interface IRepositoryResponse {
+    name: string;
+}
 
 export const Main = () => {
     const [newRepo, setNewRepo] = useState<string>('')
-    const [repositories, setRepositories] = useState<object[]>([])
+    const [repositories, setRepositories] = useState<IRepositoryResponse[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     const { getDataRepository } = EndpointsGitHub()
@@ -38,6 +42,11 @@ export const Main = () => {
         getRepositories()
     }, [newRepo, repositories])
 
+    const handleDelete = useCallback((repoName: string) => {
+        const findRepoDifferent = repositories.filter(r => r.name !== repoName)
+        setRepositories(findRepoDifferent)
+    }, [repositories])
+
     return (
         <Container>
             <h1><FaGithub size={25} /> Meus Repositórios</h1>
@@ -60,6 +69,24 @@ export const Main = () => {
 
                 </SubmitButton>
             </Form>
+
+            <List>
+                {
+                    repositories.map((repo, index) => (
+                        <li key={index}>
+                            <span>
+                                <RemoveButton onClick={() => handleDelete(repo.name)}>
+                                    <FaTrash size={14} />
+                                </RemoveButton>
+                                {repo.name}
+                            </span>
+                            <a href="">
+                                <FaBars size={20} />
+                            </a>
+                        </li>
+                    ))
+                }
+            </List>
         </Container>
 
     )
