@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 
 export const Container = styled.div`
     max-width: 700px;
@@ -33,9 +33,29 @@ export const Form = styled.form`
     }
 `
 
-export const SubmitButton = styled.button.attrs({
-    type: 'submit'
-})`
+interface IButton {
+    loading: boolean;
+}
+
+/*ANIMAÇÃO DE LOADING UTILIZANDO O KEYFRAMES DO STYLED-COMPONENTS
+o valor é da onde surge até onde vai
+*/
+const animatedSpinner = keyframes`
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
+    }
+`
+
+export const SubmitButton = styled.button.attrs<IButton>(
+    ({ loading }) => ({
+        disabled: loading,
+        type: "submit"
+    })
+) <IButton>`
     background-color: #0D2636;
     padding: 0 15px;
     display: flex;
@@ -44,4 +64,15 @@ export const SubmitButton = styled.button.attrs({
     border: 0;
     border-radius: 4px;
     margin-left: 10px;
+
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    ${({ loading }) => loading && css`
+        svg{
+            animation: ${animatedSpinner} 2s linear infinite;
+        }
+    `}
 `
