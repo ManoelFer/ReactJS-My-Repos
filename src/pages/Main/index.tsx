@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react'
 
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
 
+import { toast } from 'react-toastify';
+
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints'
 
 import { Container, Form, List, RemoveButton, SubmitButton } from "./styles"
@@ -35,6 +37,7 @@ export const Main = () => {
             } catch (error) {
                 setLoading(false)
                 console.log('Erro ao encontrar repositório :>> ', error);
+                toast.error(`Repositório não encontrado 😪`)
                 // alert('Erro ao encontrar repositório')
             }
         }
