@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
 
@@ -19,11 +19,39 @@ export const Main = () => {
 
     const { getDataRepository } = EndpointsGitHub()
 
+    useEffect(() => {
+        const repoStorage = localStorage.getItem('repositories')
+
+        if (repoStorage) {
+            setRepositories(JSON.parse(repoStorage))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (repositories.length > 0) localStorage.setItem('repositories', JSON.stringify(repositories))
+    }, [repositories])
+
     const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         async function getRepositories() {
             setLoading(true)
+
+            /**Validações manuais ================================ */
+            if (!newRepo) {
+                setLoading(false)
+                toast.warning(`Por favor digite o nome de um repositório 🫡`)
+                throw new Error('Você precisa indicar um repositório!')
+            }
+
+            const hasRepo = repositories.find(repo => repo.name === newRepo)
+            if (hasRepo) {
+                setLoading(false)
+                toast.warning(`Repositório Duplicado! 😯`)
+                throw new Error('Repositório Duplicado!')
+            }
+            /**Validações manuais ================================ */
+
             try {
                 const { data } = await getDataRepository(newRepo)
 
@@ -33,12 +61,11 @@ export const Main = () => {
 
                 setRepositories([...repositories, interestingData])
                 setNewRepo('')
-                setLoading(false)
             } catch (error) {
-                setLoading(false)
                 console.log('Erro ao encontrar repositório :>> ', error);
                 toast.error(`Repositório não encontrado 😪`)
-                // alert('Erro ao encontrar repositório')
+            } finally {
+                setLoading(false)
             }
         }
 
