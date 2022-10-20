@@ -12,10 +12,10 @@ export const Container = styled.div`
         font-size: 20px;
         display: flex;
         align-items: center;
-    }
 
-    span {
-        margin-left: 10px;
+        svg {
+            margin-right: 10px;
+        }
     }
 `
 
@@ -33,7 +33,9 @@ export const Form = styled.form`
     }
 `
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button.attrs({
+    type: 'submit'
+})`
     background-color: #0D2636;
     padding: 0 15px;
     display: flex;
