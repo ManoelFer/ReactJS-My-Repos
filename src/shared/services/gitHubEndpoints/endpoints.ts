@@ -9,7 +9,16 @@ const EndpointsGitHub = (): IEndpointsGitHub => {
         return instance.get(`repos/${repoName}`)
     }
 
-    return { getDataRepository }
+    async function getDataRepositoryIssues(repoName: string) {
+        return instance.get(`repos/${repoName}/issues`, {
+            params: {
+                state: 'open',
+                per_page: 5
+            }
+        })
+    }
+
+    return { getDataRepository, getDataRepositoryIssues }
 }
 
 export default EndpointsGitHub
