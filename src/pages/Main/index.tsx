@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
-
+import { Link } from 'react-router-dom';
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa'
-
 import { toast } from 'react-toastify';
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints'
@@ -110,9 +109,9 @@ export const Main = () => {
                                 </RemoveButton>
                                 {repo.name}
                             </span>
-                            <a href="">
+                            <Link to={`/repository/${encodeURIComponent(repo.name)}`}>
                                 <FaBars size={20} />
-                            </a>
+                            </Link>
                         </li>
                     ))
                 }
