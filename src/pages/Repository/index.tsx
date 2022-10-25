@@ -4,7 +4,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints';
 
-import { Container, OwnerContainer, Loading, BackButton, IssuesList } from "./styles";
+import { Container, OwnerContainer, Loading, BackButton, IssuesList, PageActions } from "./styles";
 
 interface IRepositoryInfos {
     owner: {
@@ -39,6 +39,7 @@ export const Repository = () => {
     const [repository, setRepository] = useState<IRepositoryInfos>();
     const [issues, setIssues] = useState<IIssueInfos[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(1);
 
     const { getDataRepository, getDataRepositoryIssues } = EndpointsGitHub()
 
@@ -46,7 +47,7 @@ export const Repository = () => {
         async function loadInfos() {
             const [dataRepo, dataRepoIssues] = await Promise.all([
                 getDataRepository(repository_full_name || ''),
-                getDataRepositoryIssues(repository_full_name || '')
+                getDataRepositoryIssues(repository_full_name || '', page)
             ])
 
             setRepository(dataRepo.data)
@@ -55,7 +56,20 @@ export const Repository = () => {
         }
 
         loadInfos()
-    }, [repository_full_name])
+    }, [repository_full_name, page])
+
+    useEffect(() => {
+        async function updateIssues() {
+            const { data } = await getDataRepositoryIssues(repository_full_name || '', page)
+            setIssues(data)
+        }
+
+        updateIssues()
+    }, [page])
+
+    const handlePage = (to: string) => {
+        setPage(to === "back" ? page - 1 : page + 1)
+    }
 
 
     if (loading) {
@@ -97,6 +111,21 @@ export const Repository = () => {
                     ))
                 }
             </IssuesList>
+            <PageActions>
+                <button
+                    type="button"
+                    onClick={() => handlePage("back")}
+                    disabled={page < 2}
+                >
+                    Voltar
+                </button>
+                <button
+                    type="button"
+                    onClick={() => handlePage("next")}
+                >
+                    Próxima
+                </button>
+            </PageActions>
         </Container>
     )
 }

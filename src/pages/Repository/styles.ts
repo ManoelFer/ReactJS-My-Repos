@@ -107,4 +107,23 @@ export const IssuesList = styled.ul`
     }
 `
 
+export const PageActions = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+        outline: 0;
+        border: 0;
+        background-color: ${({ theme }) => theme.colors.colorTextInsideBodyInputButton};
+        color: ${({ theme }) => theme.colors.cardColor};
+        padding: 5px 10px;
+        border-radius: 4px;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+`
 
