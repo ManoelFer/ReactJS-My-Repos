@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom'
 
 export const Loading = styled.div`
-    color: #fff;
+    color: ${({ theme }) => theme.colors.loadingColor};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,9 +11,9 @@ export const Loading = styled.div`
 
 export const Container = styled.div`
     max-width: 700px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.cardColor};
     border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    box-shadow: 0 0 20px ${({ theme }) => theme.colors.colorShadow};
     padding: 30px;
     margin: 180px auto;
 `
@@ -31,13 +31,13 @@ export const OwnerContainer = styled.header`
 
     h1 {
         font-size: 30px;
-        color: #0D2636
+        color: ${({ theme }) => theme.colors.titleH1Color}
     }
 
     p {
         margin-top: 5px;
         font-size: 1vh;
-        color: #000;
+        color: ${({ theme }) => theme.colors.lettersColor};
         text-align: center;
         line-height: 1.4;
         max-width: 400px;

@@ -13,13 +13,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body{
-    background-color: #0D2636;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
     font-size: 14px;
     -webkit-font-smoothing: antialiased !important;
   }
 
   body, input, button {
-    color: #222;
+    color: ${({ theme }) => theme.colors.colorTextInsideBodyInputButton};
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
   }

@@ -2,11 +2,11 @@ import styled, { keyframes, css } from 'styled-components'
 
 export const Container = styled.div`
     max-width: 700px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.cardColor};
     margin: 180px auto;
     padding: 30px;
     border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0, 0.2);
+    box-shadow: 0 0 20px ${({ theme }) => theme.colors.colorShadow};
 
     h1 {
         font-size: 20px;
@@ -26,7 +26,7 @@ export const Form = styled.form`
 
     input {
         flex: 1;
-        border: 1px solid #ddd;
+        border: 1px solid ${({ theme }) => theme.colors.borderInputColor};
         padding: 10px 15px;
         border-radius: 4px;
         font-size: 17px;
