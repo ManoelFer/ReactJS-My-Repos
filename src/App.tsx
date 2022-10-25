@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import GlobalStyle from "./global/styles";
 
-import { RoutesApp } from "./routes";
+import { RoutesApp } from "./routes/app.routes";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import { Main, Repository } from './pages'
+import { Main, Repository } from '../pages'
 
 export const RoutesApp = () => {
     return (
