@@ -49,3 +49,62 @@ export const BackButton = styled(Link)`
     outline: 0;
     background: transparent;
 `
+
+export const IssuesList = styled.ul`
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid ${({ theme }) => theme.colors.borderIssueColor};
+    list-style: none;
+
+    li {
+        display: flex;
+        padding: 15px 10px;
+
+        & + li {
+            margin-top: 12px;
+        }
+
+        img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid ${({ theme }) => theme.colors.backgroundColor};
+        }
+
+        div {
+            flex: 1;
+            margin-left: 12px;
+
+            p {
+                margin-top: 10px;
+                margin-top:12px;
+                color: ${({ theme }) => theme.colors.lettersColor};
+            }
+        }
+
+        strong {
+            font-size: 15px;
+
+            a{
+                text-decoration: none;
+                color: ${({ theme }) => theme.colors.colorTextInsideBodyInputButton};
+
+                &:hover{
+                    color: ${({ theme }) => theme.colors.hoverLink};
+                }
+            }
+
+            span {
+                background-color: ${({ theme }) => theme.colors.colorTextInsideBodyInputButton};
+                color: ${({ theme }) => theme.colors.cardColor};
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 600;
+                padding: 5px 7px;
+                margin-left: 10px;
+            }
+        }
+    }
+`
+
+

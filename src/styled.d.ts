@@ -11,6 +11,8 @@ declare module 'styled-components' {
             titleH1Color: string,
             borderInputColor: string;
             colorTextInsideBodyInputButton: string;
+            borderIssueColor: string;
+            hoverLink: string;
         },
         fonts: string[],
         fontSizes: {

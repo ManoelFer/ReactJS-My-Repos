@@ -7,7 +7,9 @@ export const darkTheme = {
         loadingColor: "#fff",
         colorShadow: "rgba(0,0,0,0.2)",
         borderInputColor: "#ddd",
-        colorTextInsideBodyInputButton: ""
+        colorTextInsideBodyInputButton: "#222",
+        borderIssueColor: "#eee",
+        hoverLink: "#0071DB"
     },
     fonts: ["Lato"],
     fontSizes: {
