@@ -4,7 +4,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints';
 
-import { Container, OwnerContainer, Loading, BackButton, IssuesList, PageActions } from "./styles";
+import { Container, OwnerContainer, Loading, BackButton, IssuesList, PageActions, FilterList } from "./styles";
 
 interface IRepositoryInfos {
     owner: {
@@ -31,6 +31,11 @@ interface IIssueInfos {
     labels: ILabelInfo[]
 }
 
+interface IFilterList {
+    state: string;
+    label: string;
+    active: boolean;
+}
 
 
 export const Repository = () => {
@@ -40,6 +45,12 @@ export const Repository = () => {
     const [issues, setIssues] = useState<IIssueInfos[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(1);
+    const [filters, setFilters] = useState<IFilterList[]>([
+        { state: 'all', label: 'Todas', active: true },
+        { state: 'open', label: 'Abertas', active: false },
+        { state: 'closed', label: 'Fechadas', active: false },
+    ]);
+    const [filterSelected, setFilterSelected] = useState<number>(0);
 
     const { getDataRepository, getDataRepositoryIssues } = EndpointsGitHub()
 
@@ -47,7 +58,8 @@ export const Repository = () => {
         async function loadInfos() {
             const [dataRepo, dataRepoIssues] = await Promise.all([
                 getDataRepository(repository_full_name || ''),
-                getDataRepositoryIssues(repository_full_name || '', page)
+                //@ts-ignore
+                getDataRepositoryIssues(repository_full_name || '', page, filters.find(f => f.active).state)
             ])
 
             setRepository(dataRepo.data)
@@ -60,17 +72,17 @@ export const Repository = () => {
 
     useEffect(() => {
         async function updateIssues() {
-            const { data } = await getDataRepositoryIssues(repository_full_name || '', page)
+            //@ts-ignore
+            const { data } = await getDataRepositoryIssues(repository_full_name || '', page, filters[filterSelected].state)
             setIssues(data)
         }
 
         updateIssues()
-    }, [page])
+    }, [page, filterSelected, filters])
 
     const handlePage = (to: string) => {
         setPage(to === "back" ? page - 1 : page + 1)
     }
-
 
     if (loading) {
         return (
@@ -89,6 +101,18 @@ export const Repository = () => {
                 <h1>{repository?.name}</h1>
                 <p>{repository?.description}</p>
             </OwnerContainer>
+
+            <FilterList active={filterSelected}>
+                {filters.map((filter, index) => (
+                    <button
+                        type='button'
+                        key={filter.label}
+                        onClick={() => setFilterSelected(index)}
+                    >
+                        {filter.label}
+                    </button>
+                ))}
+            </FilterList>
             <IssuesList>
                 {
                     issues.map(issue => (

@@ -127,3 +127,24 @@ export const PageActions = styled.div`
     }
 `
 
+interface IFilterListStyled {
+    active: number;
+}
+
+export const FilterList = styled.div<IFilterListStyled>`
+    margin: 15px 0;
+
+    button {
+        outline: 0;
+        border: 0;
+        padding: 8px;
+        border-radius: 4px;
+        margin: 0 3px;
+
+        //TODO: Fazer estilizações com base na posição de um item, dentro de um arra
+        &:nth-child(${props => props.active + 1}){
+            background-color: ${({ theme }) => theme.colors.hoverLink};
+            color: ${({ theme }) => theme.colors.cardColor};
+        }
+    }
+`
