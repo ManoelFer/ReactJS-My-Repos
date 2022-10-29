@@ -4,38 +4,11 @@ import { FaArrowLeft } from 'react-icons/fa'
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints';
 
+import { filters, IFilterList } from 'shared/constants';
+
+import { IIssueInfos, IRepositoryInfos } from 'shared/interfaces';
+
 import { Container, OwnerContainer, Loading, BackButton, IssuesList, PageActions, FilterList } from "./styles";
-
-interface IRepositoryInfos {
-    owner: {
-        avatar_url: string;
-        login: string;
-    };
-    name: string;
-    description: string;
-}
-
-interface ILabelInfo {
-    id: number;
-    name: string;
-}
-
-interface IIssueInfos {
-    id: number;
-    html_url: string;
-    title: string;
-    user: {
-        avatar_url: string;
-        login: string;
-    };
-    labels: ILabelInfo[]
-}
-
-interface IFilterList {
-    state: string;
-    label: string;
-    active: boolean;
-}
 
 
 export const Repository = () => {
@@ -45,11 +18,6 @@ export const Repository = () => {
     const [issues, setIssues] = useState<IIssueInfos[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [page, setPage] = useState<number>(1);
-    const [filters, setFilters] = useState<IFilterList[]>([
-        { state: 'all', label: 'Todas', active: true },
-        { state: 'open', label: 'Abertas', active: false },
-        { state: 'closed', label: 'Fechadas', active: false },
-    ]);
     const [filterSelected, setFilterSelected] = useState<number>(0);
 
     const { getDataRepository, getDataRepositoryIssues } = EndpointsGitHub()
@@ -78,7 +46,7 @@ export const Repository = () => {
         }
 
         updateIssues()
-    }, [page, filterSelected, filters])
+    }, [page, filterSelected])
 
     const handlePage = (to: string) => {
         setPage(to === "back" ? page - 1 : page + 1)
@@ -91,6 +59,7 @@ export const Repository = () => {
             </Loading>
         )
     }
+
     return (
         <Container>
             <BackButton to="/">
@@ -103,7 +72,7 @@ export const Repository = () => {
             </OwnerContainer>
 
             <FilterList active={filterSelected}>
-                {filters.map((filter, index) => (
+                {filters.map((filter: IFilterList, index) => (
                     <button
                         type='button'
                         key={filter.label}

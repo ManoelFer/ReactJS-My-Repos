@@ -5,15 +5,14 @@ import { toast } from 'react-toastify';
 
 import EndpointsGitHub from 'shared/services/gitHubEndpoints/endpoints'
 
+import { IRepositoryInfos } from 'shared/interfaces';
+
 import { Container, Form, List, RemoveButton, SubmitButton } from "./styles"
 
-interface IRepositoryResponse {
-    name: string;
-}
 
 export const Main = () => {
     const [newRepo, setNewRepo] = useState<string>('')
-    const [repositories, setRepositories] = useState<IRepositoryResponse[]>([])
+    const [repositories, setRepositories] = useState<IRepositoryInfos[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     const { getDataRepository } = EndpointsGitHub()
@@ -55,7 +54,12 @@ export const Main = () => {
                 const { data } = await getDataRepository(newRepo)
 
                 const interestingData = {
-                    name: data.full_name
+                    owner: {
+                        avatar_url: "",
+                        login: "",
+                    },
+                    name: data.full_name,
+                    description: "",
                 }
 
                 setRepositories([...repositories, interestingData])

@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components'
+import { IButton } from './interfaces'
 
 export const Container = styled.div`
     max-width: 700px;
@@ -33,10 +34,6 @@ export const Form = styled.form`
     }
 `
 
-interface IButton {
-    loading: boolean;
-}
-
 /*ANIMAÇÃO DE LOADING UTILIZANDO O KEYFRAMES DO STYLED-COMPONENTS
 o valor é da onde surge até onde vai
 */
@@ -56,7 +53,7 @@ export const SubmitButton = styled.button.attrs<IButton>(
         type: "submit"
     })
 ) <IButton>`
-    background-color: #0D2636;
+    background-color: ${({ theme }) => theme.colors.backgroundColor};
     padding: 0 15px;
     display: flex;
     justify-content: center;
@@ -90,11 +87,11 @@ export const List = styled.ul`
         padding: 15px 0;
 
         & + li {
-            border-top: 1px solid #eee;
+            border-top: 1px solid ${({ theme }) => theme.colors.borderIssueColor};
         }
 
         a{
-            color: #0D2636;
+            color: ${({ theme }) => theme.colors.backgroundColor};
             text-decoration: none;
         }
     }
@@ -105,7 +102,7 @@ export const RemoveButton = styled.button.attrs({
 })`
 
     background-color: transparent;
-    color: #0D2636;
+    color: ${({ theme }) => theme.colors.backgroundColor};
     border: 0;
 
     padding: 8px 7px;

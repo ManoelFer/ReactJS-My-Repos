@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom'
 
+import { IFilterListStyled } from "./interfaces";
+
 export const Loading = styled.div`
     color: ${({ theme }) => theme.colors.loadingColor};
     display: flex;
@@ -126,10 +128,6 @@ export const PageActions = styled.div`
         }
     }
 `
-
-interface IFilterListStyled {
-    active: number;
-}
 
 export const FilterList = styled.div<IFilterListStyled>`
     margin: 15px 0;
